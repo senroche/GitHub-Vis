@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './style.css';
-
+const octokit = require('@octokit/rest')()
 
 class LoginForm extends Component {
 
@@ -23,8 +23,9 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    console.log('Name submitted is ' + this.state.username);
     event.preventDefault();
+    octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'})
+    octokit.repos.list().then(result => {console.log(result)});
   }
 
   errorClass(error) {
