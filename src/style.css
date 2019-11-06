@@ -1,6 +1,54 @@
+.h3{
+    font-size: 1.2rem;
+}
+.h4{
+    font-size: 0.4rem;
+}
 .login {
 	width: 400px;
 	margin: auto;
 	position: absolute;
     top: 100px;
+}
+.logo {
+    width:100%;
+    padding-bottom: 30px;
+}
+.btn-primary {
+    background-color: #f36;
+    border-color: #f36;
+    margin: 30px;
+    width:30%;
+}
+
+.form-control:focus{
+    border-color:#f36;
+    box-shadow:0px 0px 0px 0.2rem rgba(255,51,102,0.25);
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow:0px 0px 0px 0.2rem rgba(255,51,102,0.25);
+}
+.btn-primary:hover {
+    background-color: #f36;
+    border-color: #f36;
+}
+
+.container{
+    width:100%;
+}
+
+.btn-menu {
+    color: #fff;
+    background-color: rgb(17, 17, 17);
+    border-color: rgb(17, 17, 17);
+    width: 100%;
+    margin: 0%;
+    font-size:1.5em;
+    text-align: left;
+    padding-left:30px;
+}
+
+.btn-menu:hover {
+    color: #f36;
 }
