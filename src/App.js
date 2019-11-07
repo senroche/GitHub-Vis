@@ -12,7 +12,8 @@ class App extends Component {
       username: '',
       password: '',
       submit: false,
-
+      userInfo: '',
+      repoData: '',
     };
     console.log(this.props);
 
@@ -22,10 +23,27 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("trying to log in with username:", this.state.username, "Password:", this.state.password);
+
+    //Authenticate User (may be optional in the future)
+    console.log("Trying to log in with username:", this.state.username, "Password:", this.state.password);
     octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'});
-    octokit.repos.list().then(result => {console.log(result)});
-    this.setState({submit:true});
+
+    // Get user info
+    octokit.users.getAuthenticated().then(result => {
+      this.setState({userData: result.data});
+      console.log("User Data",this.state.userData);
+
+    //Get repo info
+    octokit.repos.list().then(result => {
+      this.setState({repoData: result.data});
+      console.log("Repo data", this.state.repoData);});
+
+      // Make submit true (changes screen)
+      this.setState({submit:true});
+    
+    });
+    
+  
   }
 
 
