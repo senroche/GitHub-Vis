@@ -52,3 +52,25 @@
 .btn-menu:hover {
     color: #f36;
 }
+
+.profiler{
+    width: 80%;
+    border-radius: 50%;
+}
+
+.notification{
+    text-align: center;
+    background-color: #f36;
+    width:100%;
+    margin: 0px;
+    padding: 0px;
+    height:100%;
+    color:#fff !important;
+    font-size: 1em !important;
+}
+
+
+.container-fluid{
+    padding-right:0px;
+    padding-left:0px;
+}
