@@ -32,11 +32,17 @@ class App extends Component {
     octokit.users.getAuthenticated().then(result => {
       this.setState({userInfo: result.data});
       console.log("User Info",this.state.userInfo);
-
+    
+    
     //Get repo info
     octokit.repos.list().then(result => {
       this.setState({repoData: result.data});
       console.log("Repo data", this.state.repoData);});
+
+    //Get activity
+    octokit.activity.listNotifications().then(result => {
+      console.log("Activity",result)});
+    
 
       // Make submit true (changes screen)
       this.setState({submit:true});
