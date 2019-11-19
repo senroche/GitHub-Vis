@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import LoginForm from './LoginForm.js';
 import Dashboard from './Dashboard';
+import User from './User.js';
 
 const octokit = require('@octokit/rest')()
 

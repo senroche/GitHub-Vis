@@ -1,7 +1,7 @@
 .h3{
     font-size: 1.2rem;
 }
-.h4{
+#h4{
     font-size: 0.4rem;
 }
 .login {
@@ -44,19 +44,17 @@
     border-color: rgb(17, 17, 17);
     width: 100%;
     margin: 0%;
-    font-size:1.5em;
+    font-size:1.4em;
     text-align: left;
-    padding-left:30px;
+    padding-left:10%;
+    padding-top:2%;
+
 }
 
 .btn-menu:hover {
     color: #f36;
 }
 
-.profiler{
-    width: 80%;
-    border-radius: 50%;
-}
 
 .notification{
     text-align: center;
@@ -73,4 +71,40 @@
 .container-fluid{
     padding-right:0px;
     padding-left:0px;
+}
+.gravatar{
+    border-radius: 50%;
+    width: 50%;
+    border:5px solid #f36;
+}
+.profile-container{
+    width:100%;
+    text-align:center;
+    font-size:1.2em;
+    position:absolute;
+    bottom:20%;
+}
+
+.main-panel{
+    padding-left:20px;
+    margin: 10px;
+}
+
+.developer-stats{
+    border:1px solid #f36;
+    margin:20px;
+    padding:10px;
+}
+
+.developer-stats #h4{
+    font-size:0.2rem !important;
+}
+.social-stats{
+    padding:10px;
+    border:1px solid #f36;
+    margin:20px;
+}
+
+.social-stats #h4{
+    font-size:2em;
 }
