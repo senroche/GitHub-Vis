@@ -10,7 +10,6 @@ import { GoRepo } from 'react-icons/go';
 import './style.css';
 
 
-
 class Dashboard extends Component {
     constructor (props) {
       super(props);
@@ -19,7 +18,7 @@ class Dashboard extends Component {
       };
     }
 
-    
+
   render () {
     let mainPanel;
     //Show user info

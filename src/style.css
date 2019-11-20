@@ -96,9 +96,10 @@
     padding:10px;
 }
 
-.developer-stats #h4{
+.developer-stats {
     font-size:0.2rem !important;
 }
+
 .social-stats{
     padding:10px;
     border:1px solid #f36;

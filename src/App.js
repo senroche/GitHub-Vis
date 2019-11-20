@@ -15,6 +15,8 @@ class App extends Component {
       submit: false,
       userInfo: '',
       repoData: '',
+      projects: '',
+      starred: ''
     };
     console.log(this.props);
 
@@ -24,6 +26,7 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    let promises =[];
 
     //Authenticate User (may be optional in the future)
     console.log("Trying to log in with username:", this.state.username, "Password:", this.state.password);
@@ -44,14 +47,32 @@ class App extends Component {
     octokit.activity.listNotifications().then(result => {
       console.log("Activity",result)});
     
+      
+    
+    //Get starred repos 
+      promises.push(octokit.activity.listReposStarredByUser({
+        username: this.state.userInfo.login,
+        sort:     "updated",
+      }))
+      promises.push(octokit.projects.listForUser({
+        username: this.state.userInfo.login
+      }))
+       Promise.all(promises).then(resps => {
+         console.log(resps)
+        this.setState({projects: resps[0].data, starred : resps[1].data});
+      })
+      console.log('Promises', promises);   
+      })
 
       // Make submit true (changes screen)
+      console.log(this.state.starred);
+      console.log(this.state.projects);
       this.setState({submit:true});
     
-    });
+    };
     
   
-  }
+
 
 
   handleChanges(event) {
