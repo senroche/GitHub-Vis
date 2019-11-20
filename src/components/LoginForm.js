@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
-import logo from './img/logo.png';
+import '../style/style.css';
+import logo from '../img/logo.png';
 
 
 class LoginForm extends Component {

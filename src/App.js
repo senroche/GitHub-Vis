@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import LoginForm from './LoginForm.js';
-import Dashboard from './Dashboard';
-import User from './User.js';
+import LoginForm from './components/LoginForm.js';
+import Dashboard from './components/Dashboard.js';
+import User from './components/User.js';
 
 const octokit = require('@octokit/rest')()
 
@@ -42,7 +42,8 @@ class App extends Component {
     octokit.repos.list().then(result => {
       this.setState({repoData: result.data});
       console.log("Repo data", this.state.repoData);});
-
+    
+  
     //Get activity
     octokit.activity.listNotifications().then(result => {
       console.log("Activity",result)});
@@ -70,10 +71,6 @@ class App extends Component {
       this.setState({submit:true});
     
     };
-    
-  
-
-
 
   handleChanges(event) {
     if(event.target.name==="username"){
@@ -88,14 +85,14 @@ class App extends Component {
   }
 
 
-
+  
      
 
   render() {
     return (
       <div>
         {this.state.submit ? (
-          <Dashboard info={this.state.userInfo}/>
+          <Dashboard info={this.state.userInfo} repoData={this.state.repoData}/>
             ) : (
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
             )}

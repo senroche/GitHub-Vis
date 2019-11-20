@@ -90,22 +90,30 @@
     margin: 10px;
 }
 
+.stat-box{
+    border:1px solid #f36;
+    margin:20px;
+    padding:10px;
+    font-size:0.6em !important;
+}
+
 .developer-stats{
     border:1px solid #f36;
     margin:20px;
     padding:10px;
+    width:50%;
+    font-size:1.2em !important;
 }
 
-.developer-stats {
-    font-size:0.2rem !important;
-}
 
-.social-stats{
-    padding:10px;
+.social-stats {
     border:1px solid #f36;
     margin:20px;
+    padding:10px;
+    width:20%;
+    font-size:1.2em !important;
 }
 
-.social-stats #h4{
-    font-size:2em;
+.bio{
+    margin:15px;
 }

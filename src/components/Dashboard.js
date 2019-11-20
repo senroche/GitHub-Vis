@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { FaTrophy } from 'react-icons/fa';
 import { FaUserAlt } from 'react-icons/fa';
 import { GoRepo } from 'react-icons/go';
-import './style.css';
+import '../style/style.css';
 
 
 class Dashboard extends Component {
@@ -26,7 +26,7 @@ class Dashboard extends Component {
       mainPanel=<User info ={this.props.info}/>;
     //Show repo info (incomplete)
     } else if (this.state.route===2) {
-      mainPanel=<h3>Repo Page</h3>
+      mainPanel= <h3>Repo page</h3>
     }
     //Landing (incomplete)
     else{
@@ -44,7 +44,9 @@ class Dashboard extends Component {
                 <img className= "gravatar" src={this.props.info.avatar_url} alt="Avatar"/>
                 <h3>{this.props.info.name}</h3>
                 <h3>{this.props.info.login}</h3>
-                <h5>{this.props.info.bio}</h5>
+                <div className ="bio">
+                    <h6>{this.props.info.bio}</h6>
+                </div>
             </div>
             </Col>
             <Col md={10} style = {{padding:"0px"}}>
