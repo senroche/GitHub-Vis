@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
 import '../style/style.css';
-
+import Pie from './Pie.js'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import DonutChart from './Pie' ;
 
 class User extends Component {
+  
   
   render () {
     return (
     <div>
+      
       <div className ="developer-stats">
           <h3>Developer Stats</h3>
         <div classname = "stat-box">
@@ -23,11 +27,24 @@ class User extends Component {
             <h6> Followers: <b>{this.props.info.followers}</b></h6>
             <h6> Following: <b>{this.props.info.following}</b></h6>
             <h6> Collaborators: <b>{this.props.info.collaborators}</b></h6>
+
         </div>
       </div>
-    </div>
+      <div className = "pie">
+      
+      <div>
+                <h3>Language</h3>
+                <div className="section">
+                    <Pie data = {this.props.stats} height="200" height="200" id="bs_chart" padAngle={0.03}/>
+                </div>
+            </div>
+
+      </div>
+      </div>
+      
     )
-  }
+  
+}
 }
 
 export default User;

@@ -117,3 +117,11 @@
 .bio{
     margin:15px;
 }
+
+.pie{
+    position:absolute;
+    width:30%;
+    right:5%;
+    top:5%;
+}
+

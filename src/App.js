@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import LoginForm from './components/LoginForm.js';
 import Dashboard from './components/Dashboard.js';
-import User from './components/User.js';
-
 const octokit = require('@octokit/rest')()
 
 class App extends Component {
@@ -16,7 +14,8 @@ class App extends Component {
       userInfo: '',
       repoData: '',
       projects: '',
-      starred: ''
+      starred: '',
+      langStats: '',
     };
     console.log(this.props);
 
@@ -37,17 +36,60 @@ class App extends Component {
       this.setState({userInfo: result.data});
       console.log("User Info",this.state.userInfo);
     
-    
-    //Get repo info
-    octokit.repos.list().then(result => {
-      this.setState({repoData: result.data});
-      console.log("Repo data", this.state.repoData);});
-    
   
+
+    /* Get public repos and language stats
+       Note: language stats is currently not supported for private repos. */
+    let arr = [];
+    //List repos for given username
+    octokit.repos.listForUser({
+      username: this.state.username
+      }).then(res => {
+      //Set state with repo data
+      this.setState({repoData:res.data});
+      
+      let userRepos = res.data.map(e => e.name);
+      //For each repo name
+      userRepos.forEach(e => {
+      arr.push(octokit.repos.listLanguages({
+        owner: this.state.username,
+          repo: e
+              }))
+          })
+          Promise.all(arr).then(repoStats => {
+            let languageStats = Object()
+              repoStats.map(e =>    
+                      e.data
+              ).filter(e => 
+                  Object.keys(e).length
+              ).forEach(e => {
+                  for(let key of Object.keys(e)){
+                      if(key in languageStats){
+                          languageStats[key] += e[key]
+                      }else{
+                          languageStats[key] = e[key]
+                      }
+                  }
+                })
+              
+                var newArray = [];
+                for (var key in languageStats) {
+                    var obj = {
+                      name: key,
+                      count: languageStats[key]
+                    };
+                    newArray.push(obj);
+                }
+                
+              this.setState({langStats: newArray})
+              console.log('Public language stats' , newArray);
+          })
+    });
+    
+    
     //Get activity
     octokit.activity.listNotifications().then(result => {
       console.log("Activity",result)});
-    
       
     
     //Get starred repos 
@@ -59,11 +101,11 @@ class App extends Component {
         username: this.state.userInfo.login
       }))
        Promise.all(promises).then(resps => {
-         console.log(resps)
+        console.log(resps)
         this.setState({projects: resps[0].data, starred : resps[1].data});
       })
-      console.log('Promises', promises);   
       })
+
 
       // Make submit true (changes screen)
       console.log(this.state.starred);
@@ -82,17 +124,13 @@ class App extends Component {
     else{
       console.log('Trying to update:',event.target.name,'to',event.target.value);
     }
-  }
-
-
-  
-     
+  }  
 
   render() {
     return (
       <div>
         {this.state.submit ? (
-          <Dashboard info={this.state.userInfo} repoData={this.state.repoData}/>
+          <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} />
             ) : (
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
             )}
