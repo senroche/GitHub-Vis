@@ -45,6 +45,65 @@ class PiePath extends Component {
     }
 };
 
+
+class PieLegend extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+        width: '',
+        height:'',
+        data:'',
+        pie:'',
+        color:''
+        }
+    }
+
+    createChart(_self){
+
+        var texts = (this.props.pie(this.props.data)).map(function(d, i) {
+
+            var transform="translate(10,"+i*30+")";
+
+            var rectStyle = {
+                fill:_self.props.color(i),
+                stroke:_self.props.color(i)
+
+            };
+
+            var textStyle = {
+                fill:_self.props.color(i)
+            };
+
+            return (
+                <g transform={transform} key={i}>
+                    <rect width="20" height="20" style={rectStyle} rx="2" rx="2"/>
+                    <text x="30" y="15" className="browser-legend" style={textStyle}>{d.data.name}</text>
+                </g>
+            )
+        });
+        return texts;
+    }
+
+    render(){
+
+        var style={
+            visibility:'visible'
+        };
+
+        if(this.props.width<=this.props.height+70){
+            style.visibility='hidden';
+        }
+
+        var texts = this.createChart(this);
+        var transform="translate("+(this.props.width/2+80)+",55)";
+        return(
+            <g is transform={transform} style={style}>
+                {texts}
+            </g>
+        )
+    }
+};
+
 class LanguagePie extends Component{
     constructor(props) {
         super(props);
@@ -77,6 +136,9 @@ class LanguagePie extends Component{
 
                     <PiePath width={this.state.width} height={this.props.height}
                                     pie={this.pie} color={this.color} data={this.props.data}/>
+
+                    <PieLegend pie={this.pie} color={this.color} data={this.state.data}
+                                      width={this.state.width} height={this.props.height}/>
 
                 </svg>
             </div>

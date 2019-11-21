@@ -123,5 +123,13 @@
     width:30%;
     right:5%;
     top:5%;
+    padding:20px;
 }
 
+.section:hover {
+    transform: scale(1.04);
+  }
+.section {
+    transition: all 1s;
+
+  }

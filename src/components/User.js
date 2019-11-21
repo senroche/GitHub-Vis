@@ -33,12 +33,11 @@ class User extends Component {
       <div className = "pie">
       
       <div>
-                <h3>Language</h3>
+                <h3>Language Stats</h3>
                 <div className="section">
-                    <Pie data = {this.props.stats} height="200" height="200" id="bs_chart" padAngle={0.03}/>
+                    <Pie data = {this.props.stats} width="500" height="300" id="bs_chart" padAngle={0.03}/>
                 </div>
             </div>
-
       </div>
       </div>
       
