@@ -6,11 +6,11 @@ class PiePath extends Component {
     constructor(props) {
     super(props);
     this.state={
-        width: '',
-        height: '',
-        data: '',
-        pie: '',
-        color:''
+        width: Number,
+        height: Number,
+        data: Array,
+        pie: Function,
+        color: Function
         }
     }
     
@@ -51,11 +51,11 @@ class PieLegend extends Component{
     constructor(props){
         super(props);
         this.state={
-        width: '',
-        height:'',
-        data:'',
-        pie:'',
-        color:''
+            width: Number,
+            height: Number,
+            data: Array,
+            pie: Function,
+            color: Function
         }
     }
 
@@ -78,7 +78,7 @@ class PieLegend extends Component{
             return (
                 <g transform={transform} key={i}>
                     <rect width="20" height="20" style={rectStyle} rx="2" rx="2"/>
-                    <text x="30" y="15" className="browser-legend" style={textStyle}>{d.data.name}</text>
+                    <text x="30" y="15" className="legend" style={textStyle}>{d.data.name}</text>
                 </g>
             )
         });
@@ -90,10 +90,6 @@ class PieLegend extends Component{
         var style={
             visibility:'visible'
         };
-
-        if(this.props.width<=this.props.height+70){
-            style.visibility='hidden';
-        }
 
         var texts = this.createChart(this);
         var transform="translate("+(this.props.width/2+80)+",55)";
@@ -109,10 +105,10 @@ class LanguagePie extends Component{
     constructor(props) {
         super(props);
         this.state={
-        width: '',
-        height: '',
-        padAngle: '',
-        id: '',
+            width: Number,
+            height: Number,
+            padAngle: Number,
+            id: ''
         }
     }
 
@@ -131,16 +127,18 @@ class LanguagePie extends Component{
 
         return (
             <div>
-                <svg id={this.props.id} width={this.state.width}
+                <svg className="svg" width={this.state.width}
 
                      height={this.props.height} onClick={this.updateData}>
 
+                        
                     <PiePath width={this.state.width} height={this.props.height}
                                     pie={this.pie} color={this.color} data={this.props.data}/>
 
                     <PieLegend pie={this.pie} color={this.color} data={this.state.data}
                                       width={this.state.width} height={this.props.height}/>
 
+                
                 </svg>
             </div>
         );

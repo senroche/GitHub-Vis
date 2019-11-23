@@ -6,7 +6,7 @@ import '../style/style.css';
 
 class User extends Component {
   
-  
+
   render () {
     return (
     <div>
@@ -29,17 +29,20 @@ class User extends Component {
       </div>
 
       <div className = "languageTile">
+        <h3>Language Stats</h3>
+      <div className = "pie-container">
       <div>
-                <h3>Language Stats</h3>
-                
-                    <Pie data = {this.props.stats} width="500" height="300" id="bs_chart" padAngle={0.03}/>
+      <div> 
+                    <Pie data = {this.props.stats} width="500" height="300" id="language-graph" padAngle={0.03}/>
             </div>
+            </div>
+      </div>
       </div>
       </div>
       
     )
-  
-}
+                    }
+
 }
 
 export default User;

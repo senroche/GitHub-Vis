@@ -4,17 +4,15 @@ import User from './User.js';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { FaUserAlt } from 'react-icons/fa';
+import { FaUserAlt, FaJava } from 'react-icons/fa';
 import { GoRepo } from 'react-icons/go';
 import '../style/style.css';
-
-
 
 class Dashboard extends Component {
     constructor (props) {
       super(props);
       this.state = {
-        route: '',
+        route: 1,
       };
     }
 
@@ -32,7 +30,7 @@ class Dashboard extends Component {
     else{
       mainPanel=<h3>Hi {this.props.info.login}. Click an item to start</h3>
     }
-
+    //if(this.props.langStats){
     return (
     <Container fluid style = {{margin: 0 }}>
         <div className = "notification"> You are logged in as {this.props.info.login}</div>
@@ -50,13 +48,15 @@ class Dashboard extends Component {
             </div>
             </Col>
             <Col md={10} style = {{padding:"0px"}}>
-              {mainPanel}
+
+              <User info = {this.props.info} stats={this.props.lang}/>
             </Col>
         </Row>
     </Container> 
     
     )
+    }
   }
-}
+
 
 export default Dashboard;

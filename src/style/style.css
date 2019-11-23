@@ -132,10 +132,29 @@
     width:35%;
     font-size:1.2em !important;
 }
+
+.pie-container{
+    text-align: center;
+ 
+}
 .section:hover {
     transform: scale(1.04);
   }
 .section {
     transition: all 1s;
 
+  }
+
+  .svg{
+      overflow:visible;
+  }
+
+  .legend{
+      z-index:1000;
+      position:absolute;
+      font-size:14px;
+  }
+
+  .languageGraph{
+      overflow:visible;
   }
