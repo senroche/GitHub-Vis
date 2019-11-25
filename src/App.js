@@ -3,6 +3,7 @@ import './App.css';
 import LoginForm from './components/LoginForm.js';
 import Dashboard from './components/Dashboard.js';
 import User from './components/User.js'
+import Octokit from '@octokit/rest';
 const octokit = require('@octokit/rest')()
 
 class App extends Component {
@@ -13,10 +14,12 @@ class App extends Component {
       password: '',
       submit: false,
       userInfo: '',
-      repoData: '',
+      repoData: null,
       projects: '',
       starred: '',
       langStats: null,
+      repoPrivData: '',
+      punchStats:null
     };
     console.log(this.props);
 
@@ -31,6 +34,17 @@ class App extends Component {
     //Authenticate User (may be optional in the future)
     console.log("Trying to log in with username:", this.state.username, "Password:", this.state.password);
     octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'});
+
+
+
+    octokit.repos.listForUser({
+      username: this.state.username
+      }).then(result => {
+      this.setState({repoPrivData: result.data});
+      console.log("Repo data", this.state.repoPrivData);
+      this.getPunchCardStats().then(result=>
+        this.setState({punchStats: result}))});
+
 
     // Get user info
     octokit.users.getAuthenticated().then(result => {
@@ -56,11 +70,10 @@ class App extends Component {
         this.setState({projects: resps[0].data, starred : resps[1].data});
       })
     })
-
-      //Get language stats  
-      this.getLanguageStats().then(res=>
-        this.setState({langStats: res, submit:true}));
-    
+        this.getLanguageStats().then(res=>{
+        this.setState({langStats: res,  submit:true});
+        console.log('repo data' , this.state.repoData);
+      })
     };
 
 
@@ -87,7 +100,7 @@ class App extends Component {
       }).then(res => {
       //Set state with repo data
       this.setState({repoData:res.data});
-      
+      console.log('repo data' , this.state.repoData);
       let userRepos = res.data.map(e => e.name);
       //For each repo name
       userRepos.forEach(e => {
@@ -127,6 +140,36 @@ class App extends Component {
     return newArray;
   }
   
+  /* punchCardData:
+ > [repo, repo, ..] length = number of repos 
+     |
+    >[0..167]       length = 24 hours * 7 days 
+          |
+        >[day(0-6), hour(0-23), number of commits] length =  3
+
+  */
+  getPunchCardStats() {
+    const userRepo = this.state.repoPrivData
+    let promiseArr = [];
+    let punchCardData
+    userRepo.forEach(d => {
+      promiseArr.push(
+        octokit.repos.getPunchCardStats({
+          owner: this.state.username,
+          repo: d.name
+        })
+      );
+    });
+    Promise.all(promiseArr).then(repoStats => {
+       punchCardData = repoStats.map(d => d.data);
+
+    }).then(() => {
+        this.setState({punchStats:punchCardData})
+        console.log('Punch card stats',this.state.punchStats)
+          return punchCardData;
+    }).catch(err =>
+      console.log(err));
+}
 
   render() {
     return (

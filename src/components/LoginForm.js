@@ -9,7 +9,8 @@ class LoginForm extends Component {
   render () {
     
     return (
-      <div className="App">
+      
+      <div className="App"> 
         <header className="App-header">
           <form className="login" onSubmit={this.props.onSubmit}>
             <div className = "form-group">
