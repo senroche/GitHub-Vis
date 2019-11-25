@@ -27,7 +27,7 @@ class App extends Component {
     this.handleChanges = this.handleChanges.bind(this);
   }
   
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     let promises =[];
 
@@ -40,10 +40,18 @@ class App extends Component {
     octokit.repos.listForUser({
       username: this.state.username
       }).then(result => {
-      this.setState({repoPrivData: result.data});
+      this.setState({repoPrivData: result.data})
+      })
+      .then(() =>{
       console.log("Repo data", this.state.repoPrivData);
-      this.getPunchCardStats().then(result=>
-        this.setState({punchStats: result}))});
+    
+      this.getPunchCardStats()  
+      .then(r=>
+        this.setState({punchStats: r}))
+      });
+    
+
+      
 
 
     // Get user info
@@ -88,6 +96,7 @@ class App extends Component {
       console.log('Trying to update:',event.target.name,'to',event.target.value);
     }
   }  
+
   
 
    /* Get public repo language stats*/
@@ -148,10 +157,10 @@ class App extends Component {
         >[day(0-6), hour(0-23), number of commits] length =  3
 
   */
-  getPunchCardStats() {
+  async getPunchCardStats() {
     const userRepo = this.state.repoPrivData
     let promiseArr = [];
-    let punchCardData
+    let punchCardData;
     userRepo.forEach(d => {
       promiseArr.push(
         octokit.repos.getPunchCardStats({
@@ -163,7 +172,7 @@ class App extends Component {
     Promise.all(promiseArr).then(repoStats => {
        punchCardData = repoStats.map(d => d.data);
 
-    }).then(() => {
+    }).then(()=> {
         this.setState({punchStats:punchCardData})
         console.log('Punch card stats',this.state.punchStats)
           return punchCardData;
