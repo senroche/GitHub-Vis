@@ -157,6 +157,38 @@ class App extends Component {
         >[day(0-6), hour(0-23), number of commits] length =  3
 
   */
+
+ combineData(punchCardData){
+  
+  var combined=[];
+  var k=0;
+  var j = 0;
+  //Create array [day][hour][(commits = 0)]
+  for(var i=0; i<168; i++){
+      if(i%24===0 && i!=0){
+        j++;
+      }
+      var commits = 0;
+      combined.push([j, i%24, 0]);
+    }
+    console.log('Looks like this', combined)
+    console.log(combined[1][2]);
+  
+  var k=0;
+  var j = 0;
+  var i = 0;
+  for(var i=0; i<punchCardData.length; i++){
+    for(var j=0; j<168; j++){
+      if(punchCardData[i][j][2]!=0){
+       var commits = punchCardData[i][j][2];
+       combined[j][2]+=commits;
+        }
+    }
+  }
+ 
+ return combined;
+}
+
   async getPunchCardStats() {
     const userRepo = this.state.repoPrivData
     let promiseArr = [];
@@ -169,16 +201,20 @@ class App extends Component {
         })
       );
     });
+    
     Promise.all(promiseArr).then(repoStats => {
        punchCardData = repoStats.map(d => d.data);
 
     }).then(()=> {
-        this.setState({punchStats:punchCardData})
-        console.log('Punch card stats',this.state.punchStats)
-          return punchCardData;
+      this.setState({punchStats:this.combineData(punchCardData)});
+      console.log('Condensed',this.state.punchStats);
+      return this.state.punchStats;
+
     }).catch(err =>
       console.log(err));
 }
+
+
 
   render() {
     return (
