@@ -20,24 +20,18 @@ class Star extends Component {
         return <h3>Looks like you havent starred anything!</h3>
     }
     for(var i = 0; i<x.length; i++){
-    /*var card=
-        <div style={{width:"200px"}}>
-            <h3> {x[i].full_name} </h3>
-            <a href={x[i].url}>{x[i].full_name}</a>
-        </div>*/
-
-var card=
-        <Card style={{ width: '18rem' }}>
-        <Card.Body>
-        <Card.Title>{x[i].name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">x[i].full_name</Card.Subtitle>
-        <Card.Text>
-            {x[i].description}
-        </Card.Text>
-        <Card.Link href={x[i].html_url}>Visit</Card.Link>
-        </Card.Body>
-        </Card>
-    arr.push(card);
+        var card=
+            <Card style={{ width: '18rem' }}>
+            <Card.Body>
+            <Card.Title>{x[i].name}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">{x[i].full_name}</Card.Subtitle>
+            <Card.Text>
+                {x[i].description}
+            </Card.Text>
+            <Card.Link href={x[i].html_url}>Visit</Card.Link>
+            </Card.Body>
+            </Card>
+        arr.push(card);
   }
   return arr;
   }
