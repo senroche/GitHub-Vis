@@ -30,7 +30,7 @@ class App extends Component {
   
   async handleSubmit(event) {
     event.preventDefault();
-    let promises =[];
+    
 
     //Authenticate User (may be optional in the future)
     octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'});
@@ -40,22 +40,13 @@ class App extends Component {
     octokit.users.getAuthenticated().then(result => {
       this.setState({userInfo: result.data});
 
-    //Get activity
-    octokit.activity.listNotifications().then(result => {
-    });
-       
-    //Get starred repos 
-      promises.push(octokit.activity.listReposStarredByUser({
-        username: this.state.userInfo.login,
-        sort:     "updated",
-      }))
-      promises.push(octokit.projects.listForUser({
-        username: this.state.userInfo.login
-      }))
-       Promise.all(promises).then(resps => {
-        this.setState({projects: resps[0].data, starred : resps[1].data});
-      })
+
+    octokit.activity.listReposStarredByUser({
+      username: this.state.username,
+    }).then(result => {
+      this.setState({starred: result.data});
     })
+       
       octokit.repos.listForUser({
         username: this.state.username
         }).then(result => {
@@ -68,11 +59,12 @@ class App extends Component {
         this.getPunchCardStats().then(r=>{
           //Will remove timer when I fix promises.
       });
-    });
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      });
+      
+    })
+    await new Promise(resolve => setTimeout(resolve, 3000));
       this.setState({submit:true});
-    };
+  }
 
 
   handleChanges(event) {
@@ -216,13 +208,39 @@ class App extends Component {
       console.log(err));
 }
 
+async getContributors() {
+  const userRepo = this.state.repoPrivData
+  let promiseArr = [];
+  let punchCardData;
+  userRepo.forEach(d => {
+    promiseArr.push(
+      octokit.repos.getPunchCardStats({
+        owner: this.state.username,
+        repo: d.name
+      })
+    );
+  });
+  
+  Promise.all(promiseArr).then(repoStats => {
+     punchCardData = repoStats.map(d => d.data);
+
+  }).then(()=> {
+    this.setState({punchStats:this.combineData(punchCardData)})
+    .then(()=>{
+    return this.state.punchStats;
+    });
+
+  }).catch(err =>
+    console.log(err));
+}
+
 
 
   render() {
     return (
       <div>
         {this.state.submit && !this.state.loading ? (
-          <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} punch={this.state.punchStats} />
+          <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} punch={this.state.punchStats} star={this.state.starred} />
             ) : (
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
             )}

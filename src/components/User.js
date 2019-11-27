@@ -14,7 +14,7 @@ class User extends Component {
     {console.log('Its not here', this.props.punch)}
     return (
     <div>
-      
+      <Row>
       <div className ="quick-stats">
           <h3 style ={{paddingBottom: "6px"}}>Quick Stats</h3>
         <div classname = "stat-box">
@@ -31,13 +31,14 @@ class User extends Component {
           <h6> Collaborators: <b>{this.props.info.collaborators}</b></h6>
         </div>   
       </div>
-
+      
       <div className = "languageTile">
         <h3>Language Stats</h3>
       <div className = "pie-container">
         <Pie data = {this.props.stats} width="500" height="300" id="language-graph" padAngle={0.03}/>
       </div>
       </div>
+      </Row>
       <CreatePunchCard data={this.props.punch}/>
       </div>
       

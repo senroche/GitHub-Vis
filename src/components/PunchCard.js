@@ -15,7 +15,6 @@ class CreatePunchCard extends Component {
   
   componentWillMount(){
 	  this.setState({data: this.props.data});
-	  console.log("THE DATA",this.props.data);
   }
 
 

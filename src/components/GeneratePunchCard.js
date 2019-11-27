@@ -16,7 +16,10 @@ class GeneratePunchCard extends Component {
         name: d.name,
         value: 0
       }));
-  
+      
+      var z = d3.scaleLinear()
+      .domain([1, 10])
+      .range([ 10, 40]);
   
        select(node)
         .append("g")
@@ -24,9 +27,13 @@ class GeneratePunchCard extends Component {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", function(d) { return xScale(d.name) } )
+        .attr("cx", function(d) { return xScale((d.name) +30) } )
         .attr("cy", function(d) { return yScale(d.value) } )
-        .attr("r", 4)
+        .attr("r", function (d) { return z(d.count); } )
+        .style("fill", "#f36")
+        .style("opacity", "0.7")
+        .attr("stroke", "black")
+
       
   
       this.updateChart()
