@@ -18,10 +18,6 @@ class GeneratePunchCard extends Component {
       }));
   
   
-       var z = d3.scaleLinear()
-        .domain([1, 40])
-        .range([ 1, 40]);
-  
        select(node)
         .append("g")
         .selectAll("dot")

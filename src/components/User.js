@@ -6,9 +6,12 @@ import '../style/style.css';
 import CreatePunchCard from './PunchCard.js';
 
 class User extends Component {
-  
+  constructor(props){
+    super(props);
+  }
 
   render () {
+    {console.log('Its not here', this.props.punch)}
     return (
     <div>
       
@@ -34,9 +37,8 @@ class User extends Component {
       <div className = "pie-container">
         <Pie data = {this.props.stats} width="500" height="300" id="language-graph" padAngle={0.03}/>
       </div>
-      <CreatePunchCard/>
-      
       </div>
+      <CreatePunchCard data={this.props.punch}/>
       </div>
       
     )

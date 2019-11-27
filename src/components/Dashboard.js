@@ -7,12 +7,14 @@ import Button from 'react-bootstrap/Button';
 import { FaUserAlt, FaJava } from 'react-icons/fa';
 import { GoRepo } from 'react-icons/go';
 import '../style/style.css';
+import CreatePunchCard from './PunchCard.js';
 
 class Dashboard extends Component {
     constructor (props) {
       super(props);
       this.state = {
         route: 1,
+        
       };
     }
 
@@ -21,7 +23,6 @@ class Dashboard extends Component {
     let mainPanel;
     //Show user info
     if (this.state.route===1) {
-      mainPanel=<User info = {this.props.info} stats={this.props.lang}/>;
     //Show repo info (incomplete)
     } else if (this.state.route===2) {
       mainPanel= <h3>Repo page</h3>
@@ -49,7 +50,7 @@ class Dashboard extends Component {
             </Col>
             <Col md={10} style = {{padding:"0px"}}>
 
-              <User info = {this.props.info} stats={this.props.lang}/>
+              <User info = {this.props.info} stats={this.props.lang} punch={this.props.punch}/>
             </Col>
         </Row>
     </Container> 

@@ -5,24 +5,22 @@ import GeneratePunchCard from './GeneratePunchCard.js';
 import { extent } from 'd3-array';
 
 class CreatePunchCard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      data: [
-        { name: 'Mon', value: 0,count:0},
-        { name: 'Mon', value: 15,count:6},
-        { name: 'Tue', value: 14,count:3 },
-        { name: 'Wed', value: 11,count:1 },
-        { name: 'Thu', value: 23,count:2 },
-        { name: 'Fri', value: 14,count:3 },
-        { name: 'Sat', value: 22,count:5 },
-        { name: 'Sun', value: 16,count:5 },
-      ],
+		data: null
     }
   }
- 
+  
+  
+  componentWillMount(){
+	  this.setState({data: this.props.data});
+	  console.log("THE DATA",this.props.data);
+  }
+
+
   render() {
-    const { data } = this.state;
+	const { data } = this.state;
     const parentWidth = 500;
 
     const margins = {

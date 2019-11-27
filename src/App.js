@@ -19,9 +19,10 @@ class App extends Component {
       starred: '',
       langStats: null,
       repoPrivData: '',
-      punchStats:null
+      punchStats:null,
+      loading: true,
     };
-    console.log(this.props);
+
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChanges = this.handleChanges.bind(this);
@@ -32,35 +33,17 @@ class App extends Component {
     let promises =[];
 
     //Authenticate User (may be optional in the future)
-    console.log("Trying to log in with username:", this.state.username, "Password:", this.state.password);
     octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'});
 
-
-
-    octokit.repos.listForUser({
-      username: this.state.username
-      }).then(result => {
-      this.setState({repoPrivData: result.data})
-      })
-      .then(() =>{
-      console.log("Repo data", this.state.repoPrivData);
-    
-      this.getPunchCardStats()  
-      .then(r=>
-        this.setState({punchStats: r}))
-      });
     
     // Get user info
     octokit.users.getAuthenticated().then(result => {
       this.setState({userInfo: result.data});
-      console.log("User Info",this.state.userInfo);
-    
-    
+
     //Get activity
     octokit.activity.listNotifications().then(result => {
-      console.log("Activity",result)});
-      
-    
+    });
+       
     //Get starred repos 
       promises.push(octokit.activity.listReposStarredByUser({
         username: this.state.userInfo.login,
@@ -70,14 +53,25 @@ class App extends Component {
         username: this.state.userInfo.login
       }))
        Promise.all(promises).then(resps => {
-        console.log(resps)
         this.setState({projects: resps[0].data, starred : resps[1].data});
       })
     })
+      octokit.repos.listForUser({
+        username: this.state.username
+        }).then(result => {
+        this.setState({repoPrivData: result.data})
+        }).then(()=>{
+
         this.getLanguageStats().then(res=>{
-        this.setState({langStats: res,  submit:true});
-        console.log('repo data' , this.state.repoData);
-      })
+        this.setState({langStats: res})});
+        
+        this.getPunchCardStats().then(r=>{
+          //Will remove timer when I fix promises.
+      });
+    });
+
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      this.setState({submit:true});
     };
 
 
@@ -105,7 +99,6 @@ class App extends Component {
       }).then(res => {
       //Set state with repo data
       this.setState({repoData:res.data});
-      console.log('repo data' , this.state.repoData);
       let userRepos = res.data.map(e => e.name);
       //For each repo name
       userRepos.forEach(e => {
@@ -138,7 +131,6 @@ class App extends Component {
                 newArray.push(obj);
             }
             this.setState({langStats: newArray});
-          console.log('Public language stats' , newArray);
         });
        })
           
@@ -155,7 +147,6 @@ class App extends Component {
   */
 
  combineData(punchCardData){
-  
   var combined=[];
   var k=0;
   var j = 0;
@@ -168,9 +159,6 @@ class App extends Component {
       combined.push([j, i%24, 0]);
     }
   
-  var k=0;
-  var j = 0;
-  var i = 0;
   for(var i=0; i<punchCardData.length; i++){
     for(var j=0; j<168; j++){
       if(punchCardData[i][j][2]!=0){
@@ -179,9 +167,28 @@ class App extends Component {
         }
     }
   }
- return combined;
+  //The graph only needs array values where there are commits
+  const day = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  var newArr = [];
+  var obj = new Object();
+  for(var i = 0; i <combined.length; i++){
+    if(combined[i][2]!=0){
+    obj = {
+      name: day[combined[i][0]],
+      value: combined[i][1],
+      count: combined[i][2]
+    }
+    newArr.push(obj);
+    //Make sure graph starts at 0
+    newArr.push({name: 'Monday', value: 0, count: 0});
+    }
+  }
+ // this.setState({punchStats: newArr});
+  this.setState({loading:false});
+    return newArr;
+  }
+  
 
-}
 
   async getPunchCardStats() {
     const userRepo = this.state.repoPrivData
@@ -200,9 +207,10 @@ class App extends Component {
        punchCardData = repoStats.map(d => d.data);
 
     }).then(()=> {
-      this.setState({punchStats:this.combineData(punchCardData)});
-      console.log('Condensed',this.state.punchStats);
+      this.setState({punchStats:this.combineData(punchCardData)})
+      .then(()=>{
       return this.state.punchStats;
+      });
 
     }).catch(err =>
       console.log(err));
@@ -213,8 +221,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.submit ? (
-          <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} />
+        {this.state.submit && !this.state.loading ? (
+          <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} punch={this.state.punchStats} />
             ) : (
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
             )}
