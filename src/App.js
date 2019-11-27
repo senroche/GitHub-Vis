@@ -50,10 +50,6 @@ class App extends Component {
         this.setState({punchStats: r}))
       });
     
-
-      
-
-
     // Get user info
     octokit.users.getAuthenticated().then(result => {
       this.setState({userInfo: result.data});
@@ -171,8 +167,6 @@ class App extends Component {
       var commits = 0;
       combined.push([j, i%24, 0]);
     }
-    console.log('Looks like this', combined)
-    console.log(combined[1][2]);
   
   var k=0;
   var j = 0;
@@ -185,8 +179,8 @@ class App extends Component {
         }
     }
   }
- 
  return combined;
+
 }
 
   async getPunchCardStats() {

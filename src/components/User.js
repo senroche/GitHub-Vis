@@ -3,6 +3,7 @@ import Pie from './Pie.js'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../style/style.css';
+import CreatePunchCard from './PunchCard.js';
 
 class User extends Component {
   
@@ -33,6 +34,7 @@ class User extends Component {
       <div className = "pie-container">
         <Pie data = {this.props.stats} width="500" height="300" id="language-graph" padAngle={0.03}/>
       </div>
+      <CreatePunchCard/>
       
       </div>
       </div>
