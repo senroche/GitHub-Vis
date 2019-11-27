@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Pie from './Pie.js'
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Fade from 'react-reveal/Fade';
+import Flip from 'react-reveal/Flip';
 import '../style/style.css';
 import CreatePunchCard from './PunchCard.js';
 
@@ -15,6 +16,7 @@ class User extends Component {
     return (
     <div>
       <Row>
+      <Flip left>
         <div className ="quick-stats">
             <h3 style ={{paddingBottom: "6px"}}>Quick Stats</h3>
           <div classname = "stat-box">
@@ -31,22 +33,26 @@ class User extends Component {
             <h6> Collaborators: <b>{this.props.info.collaborators}</b></h6>
           </div>   
         </div>
-        
+        </Flip>
+        <Fade right>
         <div className = "language-tile">
           <h3>Language Stats</h3>
           <div className = "pie-container">
             <Pie data = {this.props.stats} width="500" height="300" id="language-graph" padAngle={0.03}/>
           </div>
         </div>
+        </Fade>
       </Row>
 
       <Row>
+      <Fade>
       <div className = "commit-tile">
-        <h3>Language Stats</h3>
+        <h3>Punch Card Stats</h3>
         <div className = "punch-container">
           <CreatePunchCard data={this.props.punch}/>
         </div>
       </div>
+      </Fade>
       </Row> 
       </div>
     )

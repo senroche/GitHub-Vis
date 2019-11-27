@@ -78,7 +78,7 @@ class PieLegend extends Component{
             return (
                 <g transform={transform} key={i}>
                     <rect width="20" height="20" style={rectStyle} rx="2" rx="2"/>
-                    <text x="30" y="15" className="legend" style={textStyle}>{d.data.name}</text>
+                    <text x="30" y="15" className="legend" style={textStyle}>{d.data.name+" - "+d.value}</text>
                 </g>
             )
         });

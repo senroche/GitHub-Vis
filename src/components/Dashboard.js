@@ -41,7 +41,7 @@ class Dashboard extends Component {
         <Row>
             <Col style={{color: "white", background:"#111", height:"100vh", padding:"0px"}} sm={4} md={2}>
             <Button variant="menu" onClick={(e) => this.setState({route:1})} > <GoDashboard /> Dashboard </Button>
-            <Button variant="menu" onClick={(e) => this.setState({route:2})} > <FaStar /> Starred </Button>
+            <Button variant="menu" onClick={(e) => this.setState({route:2})} > <FaStar /> Stars </Button>
             <div className = "profile-container">
                 <img className= "gravatar" src={this.props.info.avatar_url} alt="Avatar"/>
                 <h3>{this.props.info.name}</h3>

@@ -22,17 +22,28 @@ class App extends Component {
       loading: true,
     };
 
-
+    this.baseState = this.state
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChanges = this.handleChanges.bind(this);
   }
-  
+
+  reset() {
+    this.setState(this.baseState)
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     
 
     //Authenticate User (may be optional in the future)
-    octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'});
+    try{
+    octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'})
+    }
+    catch(err) {
+      alert("Something went wrong, please check your details and try again.")
+      this.reset();
+    }
+   
 
     
     // Get user info
@@ -235,12 +246,14 @@ async getContributors() {
 }
 
 */
+
   render() {
     return (
       <div>
         {this.state.submit && !this.state.loading ? (
           <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} punch={this.state.punchStats} star={this.state.starred} />
             ) : (
+              
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
             )}
         </div>

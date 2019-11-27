@@ -27,7 +27,7 @@ class GeneratePunchCard extends Component {
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", function(d) { return (xScale(d.name))+30 } )
+        .attr("cx", function(d) { return (xScale(d.name))+55 } )
         .attr("cy", function(d) { return yScale(d.value) } )
         .attr("r", function (d) { return z(d.count); } )
         .style("fill", "#f36")
