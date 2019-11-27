@@ -21,14 +21,13 @@ class Star extends Component {
     }
     for(var i = 0; i<x.length; i++){
         var card=
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '100%' ,height: "200px", marginTop:"10px", marginRight:"10px"}}>
             <Card.Body>
-            <Card.Title>{x[i].name}</Card.Title>
+            <Card.Link href={x[i].html_url}><Card.Title>{x[i].name}</Card.Title></Card.Link>
             <Card.Subtitle className="mb-2 text-muted">{x[i].full_name}</Card.Subtitle>
             <Card.Text>
                 {x[i].description}
             </Card.Text>
-            <Card.Link href={x[i].html_url}>Visit</Card.Link>
             </Card.Body>
             </Card>
         arr.push(card);
@@ -42,17 +41,17 @@ class Star extends Component {
     console.log('Is it here', this.props.starred[0].full_name);
     return (
         
-    <div style={{height:"200px"}}>
-        {this.props.starred!=null ? (
-        
-          <Row>
-                <ol>
-                    {main.map(main => (
-                    <li key={main}>{main}</li>
-                    ))}
-                </ol>
-        </Row>
+    <div style={{marginLeft:"25px"}}>
 
+        {this.props.starred!=null ? (
+        <div className='col-lg-8'>
+        <Row>
+     
+            {main.map(main => (
+            <div className='col-lg-2' key={main}>{main}</div>
+            ))}    
+        </Row>
+        </div>
         ) : (
 
             {main}
