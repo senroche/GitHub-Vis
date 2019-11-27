@@ -106,8 +106,23 @@
     margin-left: 25px;
     margin-top: 10px;
     padding: 10px;
-    height: 450px;
+    height: 400px;
     width:20%;
+    font-size:1.2em !important;
+    box-shadow: 0 .5rem 1rem rgba(255, 51, 102,.45)!important;
+    border-radius: .25rem!important;
+
+
+    
+}
+
+.commit-tile{
+    border: 1px solid #f36;
+    margin-left: 25px;
+    margin-top: 10px;
+    padding: 10px;
+    height: 600px;
+    width:900px;
     font-size:1.2em !important;
     box-shadow: 0 .5rem 1rem rgba(255, 51, 102,.45)!important;
     border-radius: .25rem!important;
@@ -130,11 +145,11 @@
 }
 
 
-.languageTile{
+.language-tile{
     border:1px solid #f36;
     margin:10px;
     padding:10px;
-    height:450px;
+    height:400px;
     width:35%;
     font-size:1.2em !important;
     box-shadow: 0 .5rem 1rem rgba(255, 51, 102,.45)!important;

@@ -15,7 +15,6 @@ class App extends Component {
       submit: false,
       userInfo: '',
       repoData: null,
-      projects: '',
       starred: '',
       langStats: null,
       repoPrivData: '',
@@ -208,13 +207,14 @@ class App extends Component {
       console.log(err));
 }
 
+//Don't think I'll have time to implement this before exams due to study
+/*
 async getContributors() {
   const userRepo = this.state.repoPrivData
   let promiseArr = [];
-  let punchCardData;
   userRepo.forEach(d => {
     promiseArr.push(
-      octokit.repos.getPunchCardStats({
+      octokit.repos.listContributors({
         owner: this.state.username,
         repo: d.name
       })
@@ -225,7 +225,7 @@ async getContributors() {
      punchCardData = repoStats.map(d => d.data);
 
   }).then(()=> {
-    this.setState({punchStats:this.combineData(punchCardData)})
+    this.setState({})
     .then(()=>{
     return this.state.punchStats;
     });
@@ -234,8 +234,7 @@ async getContributors() {
     console.log(err));
 }
 
-
-
+*/
   render() {
     return (
       <div>

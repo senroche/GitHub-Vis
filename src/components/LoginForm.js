@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/style.css';
 import logo from '../img/logo.png';
 
-
 class LoginForm extends Component {
  
   render () {
@@ -15,7 +14,7 @@ class LoginForm extends Component {
           <form className="login" onSubmit={this.props.onSubmit}>
             <div className = "form-group">
               <img src = {logo} alt = "logo" className="logo"/>
-              <h3>Log in to GitHub</h3>
+              <h6>Log in using Github credentials.</h6>
               <input type="username" required className="form-control" 
               name="username"
               placeholder="Username" 
@@ -31,7 +30,7 @@ class LoginForm extends Component {
             </div>
             <button type="submit" className="btn btn-primary">Log In</button>
           </form>
-        </header>      
+        </header>  
       </div>
     )
   }

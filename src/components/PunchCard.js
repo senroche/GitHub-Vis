@@ -20,7 +20,7 @@ class CreatePunchCard extends Component {
 
   render() {
 	const { data } = this.state;
-    const parentWidth = 500;
+    const parentWidth = 900;
 
     const margins = {
       top: 20,

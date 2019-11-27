@@ -5,10 +5,10 @@ import Star from './Starred.js';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { FaUserAlt, FaJava, FaUserFriends, FaStar} from 'react-icons/fa';
-import { GoRepo, GoDashboard} from 'react-icons/go';
+import {FaUserFriends, FaStar} from 'react-icons/fa';
+import {GoDashboard} from 'react-icons/go';
 import '../style/style.css';
-import CreatePunchCard from './PunchCard.js';
+
 
 class Dashboard extends Component {
     constructor (props) {
@@ -42,7 +42,6 @@ class Dashboard extends Component {
             <Col style={{color: "white", background:"#111", height:"100vh", padding:"0px"}} sm={4} md={2}>
             <Button variant="menu" onClick={(e) => this.setState({route:1})} > <GoDashboard /> Dashboard </Button>
             <Button variant="menu" onClick={(e) => this.setState({route:2})} > <FaStar /> Starred </Button>
-            <Button variant="menu" onClick={(e) => this.setState({route:2})} > <FaUserFriends /> Top Contributors</Button>
             <div className = "profile-container">
                 <img className= "gravatar" src={this.props.info.avatar_url} alt="Avatar"/>
                 <h3>{this.props.info.name}</h3>
