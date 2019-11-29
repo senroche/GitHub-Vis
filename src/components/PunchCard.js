@@ -20,7 +20,7 @@ class CreatePunchCard extends Component {
 
   render() {
 	const { data } = this.state;
-    const parentWidth = 900;
+    const parentWidth = 800;
 
     const margins = {
       top: 20,
@@ -30,7 +30,7 @@ class CreatePunchCard extends Component {
     };
 
     const width = parentWidth - margins.left - margins.right;
-    const height = 500 - margins.top - margins.bottom;
+    const height = 400 - margins.top - margins.bottom;
 
     const xScale = scaleBand()
       .domain(data.map(d => d.name))
