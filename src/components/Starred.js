@@ -44,7 +44,7 @@ class Star extends Component {
         ) : (
 
             <div className='col-lg-8'>
-             <Row style={{display:"table"}}>
+             <Row>
      
             {main.map(main => (
             <div className='col-lg-2' key={main}>{main}</div>
