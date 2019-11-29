@@ -1,68 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# GitHub-Vis
+This project was created for a third year Software Engineering module in TCD.
 
-## Available Scripts
+![Full Demo](https://user-images.githubusercontent.com/35078186/69878624-5b69ca00-12bd-11ea-9956-12e8ec052745.gif)
 
-In the project directory, you can run:
+##Project Description
+This project was built using:
+ - [ReactJS](https://reactjs.org/)</br>
+ - [@octokit/rest](https://www.npmjs.com/package/@octokit/rest)</br>
+ - React D3[https://react-d3-library.github.io/]</br>
 
-### `npm start`
+###Login
+![login] (https://user-images.githubusercontent.com/35078186/69878601-4e4cdb00-12bd-11ea-9cb5-9099405e0524.PNG)
+The login screen uses Octokit to authenticate the GitHub user using basic authentication. It handles incorrect username and password.
+
+I could have made this project without user auth. However, the spec said a logged in user and it does allow us to pull some information about private repos as well other additional information.
+
+###Dashboard
+![dashboard] (https://user-images.githubusercontent.com/35078186/69878601-4e4cdb00-12bd-11ea-9cb5-9099405e0524.PNG)
+The dashboard is the mains screen for this application. It displays the users basic information as well as presenting three cards for stats.
+
+ - Quick Stats -> Basic stats like the number of followers, private/public repos, gists etc.</br>
+ - Language Stats -> shows the bytes of code written in each language across all repos. It displays this data in a pie chart.</br>
+ - Punch Card Stats -> Frequency of commits for week across all repositories. The size of the circle represents the number of commits in      the hour.
+ 
+ ###Stars
+ ![stars] (https://user-images.githubusercontent.com/35078186/69878603-4ee57180-12bd-11ea-9b55-58cec226356e.PNG)
+ This screen simply show the users stars and allows them to follow the link to the starred repo.
+ 
+ 
+ ## Usage 
+ 
+ ### `npm install`
+
+Install dependencies.
+ 
+ 
+ ### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
