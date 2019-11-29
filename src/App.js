@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import LoginForm from './components/LoginForm.js';
 import Dashboard from './components/Dashboard.js';
-import User from './components/User.js'
-import Octokit from '@octokit/rest';
 const octokit = require('@octokit/rest')()
 
 class App extends Component {
@@ -12,14 +10,14 @@ class App extends Component {
     this.state = {
       username: '',
       password: '',
-      submit: false,
       userInfo: '',
-      repoData: null,
+      repoData: '',
       starred: '',
       langStats: null,
-      repoPrivData: '',
       punchStats:null,
-      loading: true,
+      loadedPie: false,
+      loadedPunch:false,
+      submit: false
     };
 
     this.baseState = this.state
@@ -38,18 +36,10 @@ class App extends Component {
     //Authenticate User (may be optional in the future)
     try{
     octokit.authenticate({username: this.state.username, password: this.state.password, type:'basic'})
-    }
-    catch(err) {
-      alert("Something went wrong, please check your details and try again.")
-      this.reset();
-    }
-   
 
-    
     // Get user info
     octokit.users.getAuthenticated().then(result => {
-      this.setState({userInfo: result.data});
-
+      this.setState({userInfo: result.data})
 
     octokit.activity.listReposStarredByUser({
       username: this.state.username,
@@ -57,22 +47,25 @@ class App extends Component {
       this.setState({starred: result.data});
     })
        
-      octokit.repos.listForUser({
-        username: this.state.username
-        }).then(result => {
-        this.setState({repoPrivData: result.data})
-        }).then(()=>{
+    octokit.repos.listForUser({
+      username: this.state.username
+      }).then(result => {
+      this.setState({repoData: result.data})
+      }).then(()=>{
 
-        this.getLanguageStats().then(res=>{
-        this.setState({langStats: res})});
-        
-        this.getPunchCardStats().then(r=>{
-          //Will remove timer when I fix promises.
-      });
-      });
+      this.getLanguageStats().then(res=>{
+      this.setState({langStats: res, loadedPie:true})});
+      
+      this.getPunchCardStats()
+    });
       
     })
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    }
+    catch(err) {
+      alert("Something went wrong, please check your details and try again.")
+      this.reset();
+    }
+    
       this.setState({submit:true});
   }
 
@@ -95,13 +88,8 @@ class App extends Component {
   async getLanguageStats(){
     let arr = [];
     let newArray=[];
-    //List repos for given username
-    octokit.repos.listForUser({
-      username: this.state.username
-      }).then(res => {
-      //Set state with repo data
-      this.setState({repoData:res.data});
-      let userRepos = res.data.map(e => e.name);
+    let userRepos = this.state.repoData
+    userRepos = userRepos.map(e => e.name);
       //For each repo name
       userRepos.forEach(e => {
       arr.push(octokit.repos.listLanguages({
@@ -132,9 +120,8 @@ class App extends Component {
                 };
                 newArray.push(obj);
             }
-            this.setState({langStats: newArray});
         });
-       })
+       //})
           
     return newArray;
   }
@@ -150,7 +137,6 @@ class App extends Component {
 
  combineData(punchCardData){
   var combined=[];
-  var k=0;
   var j = 0;
   //Create array [day][hour][(commits = 0)]
   for(var i=0; i<168; i++){
@@ -185,15 +171,13 @@ class App extends Component {
     newArr.push({name: 'Monday', value: 0, count: 0});
     }
   }
- // this.setState({punchStats: newArr});
-  this.setState({loading:false});
     return newArr;
   }
   
 
 
   async getPunchCardStats() {
-    const userRepo = this.state.repoPrivData
+    const userRepo = this.state.repoData;
     let promiseArr = [];
     let punchCardData;
     userRepo.forEach(d => {
@@ -209,7 +193,7 @@ class App extends Component {
        punchCardData = repoStats.map(d => d.data);
 
     }).then(()=> {
-      this.setState({punchStats:this.combineData(punchCardData)})
+      this.setState({punchStats:this.combineData(punchCardData), loadedPunch:true})
       .then(()=>{
       return this.state.punchStats;
       });
@@ -221,7 +205,7 @@ class App extends Component {
 //Don't think I'll have time to implement this before exams due to study
 /*
 async getContributors() {
-  const userRepo = this.state.repoPrivData
+  const userRepo = this.state.repoData
   let promiseArr = [];
   userRepo.forEach(d => {
     promiseArr.push(
@@ -250,11 +234,11 @@ async getContributors() {
   render() {
     return (
       <div>
-        {this.state.submit && !this.state.loading ? (
+        {this.state.submit && this.state.loadedPunch && this.state.loadedPie ? (
           <Dashboard info={this.state.userInfo} repoData={this.state.repoData} lang={this.state.langStats} punch={this.state.punchStats} star={this.state.starred} />
             ) : (
-              
             <LoginForm onChange={this.handleChanges} onSubmit={this.handleSubmit}/>
+
             )}
         </div>
         

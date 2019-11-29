@@ -36,21 +36,10 @@ class GeneratePunchCard extends Component {
 
       
   
-      this.updateChart()
+      
     }
     
-    componentDidUpdate() {
-      this.updateChart();
-    }
-    updateChart() {
-      const {
-          lineGenerator, xScale, yScale, data,
-      } = this.props;
-  
-      const t = transition().duration(1000);
-      const dot = selectAll('.circle');
-  
-    }
+    
     render() {
       return <g className="line-group" ref={this.ref} />;
     }

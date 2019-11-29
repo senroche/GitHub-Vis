@@ -7,9 +7,6 @@ import '../style/style.css';
 import CreatePunchCard from './PunchCard.js';
 
 class User extends Component {
-  constructor(props){
-    super(props);
-  }
 
   render () {
     {console.log('Its not here', this.props.punch)}

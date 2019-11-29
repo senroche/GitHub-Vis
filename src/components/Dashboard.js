@@ -5,7 +5,7 @@ import Star from './Starred.js';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import {FaUserFriends, FaStar} from 'react-icons/fa';
+import {FaStar} from 'react-icons/fa';
 import {GoDashboard} from 'react-icons/go';
 import '../style/style.css';
 
